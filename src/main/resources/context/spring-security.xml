@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+    <security:debug/>
+
+    <security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled"/>
+
+   <security:http use-expressions="true" auto-config="true">
+        <security:custom-filter ref="localeContextFilter" after="FIRST" />
+        <security:intercept-url pattern="/test" access="hasRole('ADMIN_ROLE')"/>
+        <security:intercept-url pattern="/WEB-INF" access="permitAll" />
+        <security:form-login login-page="/admin/" default-target-url="/admin/users"
+                             authentication-failure-url="/admin"
+                             always-use-default-target="false"/>
+        <security:logout logout-success-url="/" delete-cookies="true"/>
+        <security:remember-me user-service-ref="HibernateUserDetailsService" key="rememberInvoiceAdmin" token-validity-seconds="1728000"/>
+    </security:http>
+
+    <security:authentication-manager>
+        <security:authentication-provider user-service-ref="HibernateUserDetailsService">
+            <security:password-encoder hash="sha-256">
+                <security:salt-source ref="saltSource"/>
+            </security:password-encoder>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <bean id="HibernateUserDetailsService" class="pl.miwu.invoice.service.auth.AuthenticationService"/>
+
+    <!-- Salting password by using user ID. Protection against rainbow tables -->
+    <bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource">
+        <property name="userPropertyToUse" value="id"/>
+    </bean>
+
+    <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+        <constructor-arg value="256"/>
+    </bean>
+
+</beans>
