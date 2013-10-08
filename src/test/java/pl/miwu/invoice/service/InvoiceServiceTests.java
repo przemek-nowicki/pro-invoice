@@ -24,7 +24,7 @@ import static org.junit.Assert.assertEquals;
 @ContextConfiguration({"classpath:context/spring-mvc.xml", "classpath:context/hibernate-orm.xml", "classpath:context/spring-security.xml"})
 public class InvoiceServiceTests {
     @Autowired
-    private InvoiceService invoiceService;
+    private UserService userService;
 
     @Test
     @Transactional
@@ -35,15 +35,15 @@ public class InvoiceServiceTests {
         user.setPassword("y7i$dwA_");
         user.setEnabled(true);
         String roleName = "ADMIN_ROLE";
-        UserRole userRole = invoiceService.getRoleByName(roleName);
+        UserRole userRole = userService.getUserRoleByName(roleName);
         if(userRole ==null) {
             userRole = new UserRole();
             userRole.setName(roleName);
-            invoiceService.createRole(userRole);
+            userService.createUserRole(userRole);
         }
         user.setUserRole(userRole);
-        invoiceService.createUser(user);
-        User foundUser = invoiceService.getUserById(user.getId());
+        userService.createUser(user);
+        User foundUser = userService.getUserById(user.getId());
         assertEquals(user.getUsername(),foundUser.getUsername());
         assertEquals(user.getUserRole().getName(),foundUser.getUserRole().getName());
     }
@@ -51,11 +51,11 @@ public class InvoiceServiceTests {
     @Test
     @Transactional
     public void getUsers() {
-        Collection<User> users = invoiceService.getUsers();
+        Collection<User> users = userService.getUsers();
         int usersListSize = users.size();
         User user = getMockUser();
-        invoiceService.createUser(user);
-        Collection<User> users2 = invoiceService.getUsers();
+        userService.createUser(user);
+        Collection<User> users2 = userService.getUsers();
         assertEquals(usersListSize+1, users2.size());
     }
 
@@ -63,9 +63,9 @@ public class InvoiceServiceTests {
     @Transactional
     public void getUser() {
         User user = getMockUser();
-        invoiceService.createUser(user);
-        User userByUsername = invoiceService.getUserByUsername(user.getUsername());
-        User userByEmail = invoiceService.getUserByEmail(user.getEmail());
+        userService.createUser(user);
+        User userByUsername = userService.getUserByUsername(user.getUsername());
+        User userByEmail = userService.getUserByEmail(user.getEmail());
 
         assertEquals(userByUsername.getUsername(),user.getUsername());
         assertEquals(userByEmail.getEmail(),user.getEmail());
@@ -78,11 +78,11 @@ public class InvoiceServiceTests {
         user.setPassword("#ff0000");
         user.setEnabled(true);
         String roleName = "USER_ROLE";
-        UserRole userRole = invoiceService.getRoleByName(roleName);
+        UserRole userRole = userService.getUserRoleByName(roleName);
         if(userRole ==null) {
             userRole = new UserRole();
             userRole.setName(roleName);
-            invoiceService.createRole(userRole);
+            userService.createUserRole(userRole);
         }
         user.setUserRole(userRole);
         return user;

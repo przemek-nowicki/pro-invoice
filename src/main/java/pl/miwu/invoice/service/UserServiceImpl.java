@@ -21,7 +21,7 @@ import java.util.Collection;
  */
 
 @Service
-public class InvoiceServiceImpl implements InvoiceService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -79,25 +79,25 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     @Transactional(readOnly = true)
-    public Collection<UserRole> getRoles() {
+    public Collection<UserRole> getUserRoles() {
         return roleRepository.getAll();
     }
 
     @Override
     @Transactional
-    public void createRole(UserRole userRole) {
+    public void createUserRole(UserRole userRole) {
         roleRepository.create(userRole);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public UserRole getRoleByName(String name) {
+    public UserRole getUserRoleByName(String name) {
         return roleRepository.getByName(name);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public UserRole getRoleById(int id) {
+    public UserRole getUserRoleById(int id) {
         return roleRepository.getById(id);
     }
 }

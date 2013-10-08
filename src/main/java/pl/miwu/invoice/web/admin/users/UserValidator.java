@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import pl.miwu.invoice.model.User;
-import pl.miwu.invoice.service.InvoiceService;
+import pl.miwu.invoice.service.UserService;
 import pl.miwu.invoice.util.BaseValidator;
 
 /**
@@ -18,7 +18,7 @@ import pl.miwu.invoice.util.BaseValidator;
 public class UserValidator extends BaseValidator {
 
     @Autowired
-    private InvoiceService invoiceService;
+    private UserService userService;
 
     @Override
     public boolean supports(Class clazz) {
@@ -28,13 +28,13 @@ public class UserValidator extends BaseValidator {
     @Override
     public void doValidate(Object target, Errors errors) {
         User user = (User)target;
-        User userDs = invoiceService.getUserByUsername(user.getUsername());
+        User userDs = userService.getUserByUsername(user.getUsername());
         if(userDs!=null&&userDs.getUsername().equals(user.getUsername())) {
             if((user.getId()==null)||(user.getId()!=null&&!user.getId().equals(userDs.getId()))) {
                 errors.rejectValue("username","UserValidator.username.duplicate");
             }
         }
-        userDs = invoiceService.getUserByEmail(user.getEmail());
+        userDs = userService.getUserByEmail(user.getEmail());
         if(userDs!=null&&userDs.getEmail().equals(user.getEmail())) {
             if((user.getId()==null)||(user.getId()!=null&&!user.getId().equals(userDs.getId()))) {
                 errors.rejectValue("email","UserValidator.email.duplicate");

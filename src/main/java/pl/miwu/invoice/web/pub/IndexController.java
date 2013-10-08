@@ -12,10 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import pl.miwu.invoice.service.InvoiceService;
+import pl.miwu.invoice.service.UserService;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,15 +24,15 @@ import java.util.List;
  */
 
 @Controller
-public class IndexController {
+public class IndexController extends FrontendController {
     @Autowired
-    private InvoiceService invoiceService;
+    private UserService userService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(ModelMap map) {
-        Collection users = invoiceService.getUsers();
+        Collection users = userService.getUsers();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();

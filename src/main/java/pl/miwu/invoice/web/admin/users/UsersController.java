@@ -5,7 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.miwu.invoice.model.User;
-import pl.miwu.invoice.service.InvoiceService;
+import pl.miwu.invoice.service.UserService;
 
 import java.util.Collection;
 
@@ -21,7 +21,7 @@ import java.util.Collection;
 @RequestMapping(value="/admin/users",method= RequestMethod.GET)
 public class UsersController {
     @Autowired
-    private InvoiceService invoiceService;
+    private UserService userService;
 
     @RequestMapping(value="",method = RequestMethod.GET)
     public String list() {
@@ -30,6 +30,6 @@ public class UsersController {
 
     @ModelAttribute("users")
     public Collection<User> users(){
-        return invoiceService.getUsers();
+        return userService.getUsers();
     }
 }

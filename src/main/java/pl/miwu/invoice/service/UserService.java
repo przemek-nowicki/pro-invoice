@@ -1,5 +1,6 @@
 package pl.miwu.invoice.service;
 
+import pl.miwu.invoice.model.Page;
 import pl.miwu.invoice.model.UserRole;
 import pl.miwu.invoice.model.User;
 
@@ -11,7 +12,7 @@ import java.util.Collection;
  * Date: 11.09.13
  * Time: 15:36
  */
-public interface InvoiceService {
+public interface UserService {
     public Collection<User> getUsers();
     public User getUserById(int id);
     public User getUserByUsername(String username);
@@ -19,8 +20,8 @@ public interface InvoiceService {
     public void createUser(User user);
     public void updateUser(User user);
     public void deleteUser(User user);
-    public Collection<UserRole> getRoles();
-    public void createRole(UserRole userRole);
-    public UserRole getRoleByName(String name);
-    public UserRole getRoleById(int id);
+    public Collection<UserRole> getUserRoles();
+    public void createUserRole(UserRole userRole);
+    public UserRole getUserRoleByName(String name);
+    public UserRole getUserRoleById(int id);
 }

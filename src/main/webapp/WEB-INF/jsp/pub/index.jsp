@@ -5,11 +5,12 @@
 
 <html>
     <head>
-        <title>Welcome</title>
+        <%@ include file="includes/head.jsp" %>
     </head>
     <body>
         <div>
             <h1>Home page :: Welcome</h1><br/>
+            <%@ include file="includes/pageMenu.jsp" %>
             <sec:authorize access="isAnonymous()">
                 <p>
                     <a href="<c:url value='/admin/'/>">Sign In</a>

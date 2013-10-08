@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import pl.miwu.invoice.model.UserRole;
 import pl.miwu.invoice.model.User;
-import pl.miwu.invoice.service.InvoiceService;
+import pl.miwu.invoice.service.UserService;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -30,7 +30,7 @@ import java.util.*;
 public class UserController {
 
     @Autowired
-    private InvoiceService invoiceService;
+    private UserService userService;
     @Autowired
     private UserValidator userValidator;
 
@@ -45,7 +45,7 @@ public class UserController {
         if( result.hasErrors() ) {
             return "admin/users/createOrUpdate";
         } else {
-            invoiceService.createUser(user);
+            userService.createUser(user);
             status.setComplete();
             return "redirect:/admin/users";
         }
@@ -53,7 +53,7 @@ public class UserController {
 
     @RequestMapping(value = "/edit/{userId}",method = RequestMethod.GET)
     public String initUpdateForm(@PathVariable("userId") int userId, Model model) {
-        User user = invoiceService.getUserById(userId);
+        User user = userService.getUserById(userId);
         model.addAttribute(user);
         return "admin/users/createOrUpdate";
     }
@@ -63,7 +63,7 @@ public class UserController {
         if (result.hasErrors()) {
             return "admin/users/createOrUpdate";
         } else {
-            invoiceService.updateUser(user);
+            userService.updateUser(user);
             status.setComplete();
             return "redirect:/admin/user/edit/{userId}";
         }
@@ -71,16 +71,16 @@ public class UserController {
 
     @RequestMapping(value = "/delete/{userId}", method = RequestMethod.GET)
     public String delete(@PathVariable(value="userId") int userId,Model model) {
-        User user = invoiceService.getUserById(userId);
+        User user = userService.getUserById(userId);
         if(user!=null&&user.getId()>0) {
-            invoiceService.deleteUser(user);
+            userService.deleteUser(user);
         }
         return "redirect:/admin/users/";
     }
 
     @ModelAttribute("roles")
     public Collection<UserRole> roles(){
-        return invoiceService.getRoles();
+        return userService.getUserRoles();
     }
 
     @InitBinder

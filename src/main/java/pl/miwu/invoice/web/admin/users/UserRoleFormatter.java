@@ -3,7 +3,7 @@ package pl.miwu.invoice.web.admin.users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import pl.miwu.invoice.model.UserRole;
-import pl.miwu.invoice.service.InvoiceService;
+import pl.miwu.invoice.service.UserService;
 
 import java.text.ParseException;
 import java.util.Locale;
@@ -17,7 +17,7 @@ import java.util.Locale;
 public class UserRoleFormatter implements Formatter<UserRole> {
 
     @Autowired
-    private InvoiceService invoiceService;
+    private UserService userService;
 
     @Override
     public String print(UserRole userRole, Locale locale) {
@@ -27,7 +27,7 @@ public class UserRoleFormatter implements Formatter<UserRole> {
     @Override
     public UserRole parse(String s, Locale locale) throws ParseException {
         Integer roleId = Integer.parseInt(s);
-        UserRole userRole = invoiceService.getRoleById(roleId);
+        UserRole userRole = userService.getUserRoleById(roleId);
         if(userRole.getId().equals(roleId)) {
             return userRole;
         }
