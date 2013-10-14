@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:context/spring-mvc.xml", "classpath:context/hibernate-orm.xml", "classpath:context/spring-security.xml"})
-public class InvoiceServiceTests {
+public class UserServiceTests {
     @Autowired
     private UserService userService;
 
