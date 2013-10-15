@@ -13,7 +13,7 @@
               description="Label appears in select option" %>
 <%@ attribute name="itemValue" required="true"
               description="Value in the option tag" %>
-<%@ attribute name="firstOptionLabel" required="true" %>
+<%@ attribute name="firstOptionLabel" required="false" %>
 
 <spring:bind path="${name}">
     <c:set var="cssGroup" value="control-group ${status.error ? 'error' : '' }"/>

@@ -21,7 +21,7 @@
 
 
 <form:form modelAttribute="user" method="PUT">
-    <miwu:selectField name="userRole" label="${labelRole}" names="${roles}" itemLabel="name" itemValue="id" firstOptionLabel="-- ${firstOptionLabel} --" size="2"/>
+    <miwu:selectField name="userRole" label="${labelRole}" names="${roles}" itemLabel="name" itemValue="id" size="2"/>
     <miwu:inputField name="username" label="${labelUsername}"/>
     <miwu:inputField name="email" label="${labelEmail}"/>
     <c:if test="${empty user.id}">

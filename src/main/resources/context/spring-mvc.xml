@@ -16,6 +16,7 @@
         <property name="formatters">
             <set>
                 <bean class="pl.miwu.invoice.web.admin.users.UserRoleFormatter"/>
+                <bean class="pl.miwu.invoice.web.admin.invoices.ClientFormatter"/>
             </set>
         </property>
     </bean>

@@ -1,8 +1,8 @@
 package pl.miwu.invoice.model;
 
-import pl.miwu.invoice.util.invoice.Status;
-
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,13 +11,18 @@ import java.math.BigDecimal;
  * Time: 16:40
  */
 
-public class InvoiceItem {
+@Table(name = "items")
+@Entity
+public class Item {
     private Integer id;
     private String name;
     private Integer tax;
     private BigDecimal amount;
-    private Status status;
+    private Set<Invoice> invoices;
 
+    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -26,6 +31,7 @@ public class InvoiceItem {
         this.id = id;
     }
 
+    @Column(name="name")
     public String getName() {
         return name;
     }
@@ -34,6 +40,7 @@ public class InvoiceItem {
         this.name = name;
     }
 
+    @Column(name="tax")
     public Integer getTax() {
         return tax;
     }
@@ -42,6 +49,7 @@ public class InvoiceItem {
         this.tax = tax;
     }
 
+    @Column(name="amount")
     public BigDecimal getAmount() {
         return amount;
     }
@@ -50,11 +58,12 @@ public class InvoiceItem {
         this.amount = amount;
     }
 
-    public Status getStatus() {
-        return status;
+    @ManyToMany(mappedBy = "items")
+    public Set<Invoice> getInvoices() {
+        return invoices;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setInvoices(Set<Invoice> invoices) {
+        this.invoices = invoices;
     }
 }

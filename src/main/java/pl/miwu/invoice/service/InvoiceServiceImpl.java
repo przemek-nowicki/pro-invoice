@@ -1,10 +1,14 @@
 package pl.miwu.invoice.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.miwu.invoice.model.Client;
+import pl.miwu.invoice.model.Invoice;
+import pl.miwu.invoice.model.Item;
+import pl.miwu.invoice.repository.InvoiceRepository;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,13 +19,31 @@ import java.util.Collection;
 
 @Service
 public class InvoiceServiceImpl implements InvoiceService {
+    @Autowired
+    private InvoiceRepository invoiceRepository;
 
     @Override
-    public Collection<Client> getClients() {
-        Client client = new Client();
-        client.setName("Make It With Us");
-        Collection<Client> clients = new ArrayList<Client>();
-        clients.add(client);
-        return clients;
+    public Set<Item> getItems() {
+        Set<Item>  items = new HashSet<Item>();
+        Item item = new Item();
+        item.setName("Usługa informatyczna");
+        item.setAmount(new BigDecimal(100));
+        items.add(item);
+        return items;
+    }
+
+    @Override
+    public void createInvoice(Invoice invoice) {
+        invoiceRepository.create(invoice);
+    }
+
+    @Override
+    public void updateInvoice(Invoice invoice) {
+        invoiceRepository.update(invoice);
+    }
+
+    @Override
+    public void deleteInvoice(Invoice invoice) {
+        invoiceRepository.delete(invoice);
     }
 }

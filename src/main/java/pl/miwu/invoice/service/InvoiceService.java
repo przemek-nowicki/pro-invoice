@@ -1,7 +1,7 @@
 package pl.miwu.invoice.service;
 
-import pl.miwu.invoice.model.Client;
-import pl.miwu.invoice.model.InvoiceItem;
+import pl.miwu.invoice.model.Invoice;
+import pl.miwu.invoice.model.Item;
 
 import java.util.Collection;
 
@@ -13,7 +13,8 @@ import java.util.Collection;
  */
 
 public interface InvoiceService {
-    public Collection<Client> getClients();
-    public Collection<InvoiceItem> getItems();
-
+    public Collection<Item> getItems();
+    public void createInvoice(Invoice invoice);
+    public void updateInvoice(Invoice invoice);
+    public void deleteInvoice(Invoice invoice);
 }

@@ -4,6 +4,7 @@ import pl.miwu.invoice.util.invoice.CurrencyCode;
 import pl.miwu.invoice.util.invoice.CurrencySymbol;
 import pl.miwu.invoice.util.invoice.Status;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
@@ -14,20 +15,24 @@ import java.util.Set;
  * Time: 11:14
  */
 
+@Table(name = "invoices")
+@Entity
 public class Invoice {
     private Integer id;
     private String no;
     private Date date;
     private Date due;
-    private Set<InvoiceItem> items;
+    private Set<Item> items;
     private Client client;
     private Status status;
-    private boolean reminder;
     private CurrencySymbol currencySymbol;
     private CurrencyCode currencyCode;
-    private String note;
     private String payment;
+    private String note;
 
+    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -36,6 +41,7 @@ public class Invoice {
         this.id = id;
     }
 
+    @Column(name="no")
     public String getNo() {
         return no;
     }
@@ -44,6 +50,7 @@ public class Invoice {
         this.no = no;
     }
 
+    @Column(name="creation_date")
     public Date getDate() {
         return date;
     }
@@ -52,6 +59,7 @@ public class Invoice {
         this.date = date;
     }
 
+    @Column(name="due_date")
     public Date getDue() {
         return due;
     }
@@ -60,14 +68,18 @@ public class Invoice {
         this.due = due;
     }
 
-    public Set<InvoiceItem> getItems() {
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name="invoice_item", joinColumns = {@JoinColumn(name="id_invoice",referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name="id_item",referencedColumnName = "id")})
+    public Set<Item> getItems() {
         return items;
     }
 
-    public void setItems(Set<InvoiceItem> items) {
+    public void setItems(Set<Item> items) {
         this.items = items;
     }
 
+    @ManyToOne
+    @JoinColumn(name="id_client")
     public Client getClient() {
         return client;
     }
@@ -76,6 +88,8 @@ public class Invoice {
         this.client = client;
     }
 
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     public Status getStatus() {
         return status;
     }
@@ -84,14 +98,8 @@ public class Invoice {
         this.status = status;
     }
 
-    public boolean isReminder() {
-        return reminder;
-    }
-
-    public void setReminder(boolean reminder) {
-        this.reminder = reminder;
-    }
-
+    @Column(name = "currency_symbol")
+    @Enumerated(EnumType.STRING)
     public CurrencySymbol getCurrencySymbol() {
         return currencySymbol;
     }
@@ -100,6 +108,8 @@ public class Invoice {
         this.currencySymbol = currencySymbol;
     }
 
+    @Column(name = "currency_code")
+    @Enumerated(EnumType.STRING)
     public CurrencyCode getCurrencyCode() {
         return currencyCode;
     }
@@ -108,19 +118,21 @@ public class Invoice {
         this.currencyCode = currencyCode;
     }
 
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
+    @Column(name = "payment")
     public String getPayment() {
         return payment;
     }
 
     public void setPayment(String payment) {
         this.payment = payment;
+    }
+
+    @Column(name = "note")
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

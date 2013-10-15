@@ -12,11 +12,11 @@ public enum Status {
     DUE(2,"Due"),
     PAID(3,"Paid");
 
-    private Integer value;
+    private Integer id;
     private String label;
 
-    Status(Integer value, String label) {
-        this.value=value;
+    Status(Integer id, String label) {
+        this.id=id;
         this.label=label;
     }
 }
