@@ -13,7 +13,7 @@ import java.util.Collection;
  */
 
 public interface InvoiceService {
-    public Collection<Item> getItems();
+    public Invoice getInvoiceById(int id);
     public void createInvoice(Invoice invoice);
     public void updateInvoice(Invoice invoice);
     public void deleteInvoice(Invoice invoice);

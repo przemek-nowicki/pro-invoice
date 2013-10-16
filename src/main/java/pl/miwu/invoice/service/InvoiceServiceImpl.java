@@ -23,13 +23,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     private InvoiceRepository invoiceRepository;
 
     @Override
-    public Set<Item> getItems() {
-        Set<Item>  items = new HashSet<Item>();
-        Item item = new Item();
-        item.setName("Usługa informatyczna");
-        item.setAmount(new BigDecimal(100));
-        items.add(item);
-        return items;
+    public Invoice getInvoiceById(int id) {
+        return invoiceRepository.getById(id);
     }
 
     @Override

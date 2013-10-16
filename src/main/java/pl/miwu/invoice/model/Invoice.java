@@ -6,6 +6,7 @@ import pl.miwu.invoice.util.invoice.Status;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -22,7 +23,7 @@ public class Invoice {
     private String no;
     private Date date;
     private Date due;
-    private Set<Item> items;
+    private List<Item> items;
     private Client client;
     private Status status;
     private CurrencySymbol currencySymbol;
@@ -70,11 +71,11 @@ public class Invoice {
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name="invoice_item", joinColumns = {@JoinColumn(name="id_invoice",referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name="id_item",referencedColumnName = "id")})
-    public Set<Item> getItems() {
+    public List<Item> getItems() {
         return items;
     }
 
-    public void setItems(Set<Item> items) {
+    public void setItems(List<Item> items) {
         this.items = items;
     }
 
