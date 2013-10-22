@@ -1,11 +1,14 @@
-package pl.miwu.invoice.model;
+package pl.miwu.invoice.model.invoice;
 
+import org.springframework.util.AutoPopulatingList;
+import pl.miwu.invoice.model.Client;
 import pl.miwu.invoice.util.invoice.CurrencyCode;
 import pl.miwu.invoice.util.invoice.CurrencySymbol;
 import pl.miwu.invoice.util.invoice.Status;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -23,7 +26,7 @@ public class Invoice {
     private String no;
     private Date date;
     private Date due;
-    private List<Item> items;
+    private List<InvoiceItem> invoiceItems = new AutoPopulatingList(Invoice.class);
     private Client client;
     private Status status;
     private CurrencySymbol currencySymbol;
@@ -69,14 +72,14 @@ public class Invoice {
         this.due = due;
     }
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name="invoice_item", joinColumns = {@JoinColumn(name="id_invoice",referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name="id_item",referencedColumnName = "id")})
-    public List<Item> getItems() {
-        return items;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "invoiceItemId.invoice",cascade = CascadeType.ALL)
+    @OrderBy("position ASC")
+    public List<InvoiceItem> getInvoiceItems() {
+        return invoiceItems;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setInvoiceItems(List<InvoiceItem> invoiceItems) {
+        this.invoiceItems = invoiceItems;
     }
 
     @ManyToOne
@@ -135,5 +138,24 @@ public class Invoice {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Invoice invoice = (Invoice) o;
+
+        if (id != null ? !id.equals(invoice.id) : invoice.id != null) return false;
+        if (no != null ? !no.equals(invoice.no) : invoice.no != null) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (no != null ? no.hashCode() : 0);
+        return result;
     }
 }

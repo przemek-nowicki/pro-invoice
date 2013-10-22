@@ -15,6 +15,13 @@
     </properties>
 
     <dependencies>
+
+
+        <dependency>
+            <groupId>org.lazyluke</groupId>
+            <artifactId>log4jdbc-remix</artifactId>
+            <version>0.2.7</version>
+        </dependency>
         <!-- SPRING -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -104,6 +111,9 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.2</version>
         </dependency>
+
+
+
 
         <!-- Spring Security -->
         <dependency>

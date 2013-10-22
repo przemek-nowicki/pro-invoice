@@ -1,6 +1,6 @@
 package pl.miwu.invoice.repository;
 
-import pl.miwu.invoice.model.Invoice;
+import pl.miwu.invoice.model.invoice.Invoice;
 
 /**
  * Created with IntelliJ IDEA.

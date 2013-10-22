@@ -1,4 +1,4 @@
-package pl.miwu.invoice.model;
+package pl.miwu.invoice.model.invoice;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -19,6 +19,7 @@ public class Item {
     private Integer tax;
     private BigDecimal amount;
     private Set<Invoice> invoices;
+    private Set<InvoiceItem> invoiceItems;
 
     @Id
     @Column(name="id")
@@ -58,12 +59,38 @@ public class Item {
         this.amount = amount;
     }
 
-    @ManyToMany(mappedBy = "items")
-    public Set<Invoice> getInvoices() {
+    /*@ManyToMany(mappedBy = "items")
+    public Set<InvoiceItem> getInvoices() {
         return invoices;
     }
 
-    public void setInvoices(Set<Invoice> invoices) {
+    public void setInvoices(Set<InvoiceItem> invoices) {
         this.invoices = invoices;
+    } */
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "invoiceItemId.item")
+    public Set<InvoiceItem> getInvoiceItems() {
+        return invoiceItems;
+    }
+
+    public void setInvoiceItems(Set<InvoiceItem> invoiceItems) {
+        this.invoiceItems = invoiceItems;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Item item = (Item) o;
+
+        if (id != null ? !id.equals(item.id) : item.id != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

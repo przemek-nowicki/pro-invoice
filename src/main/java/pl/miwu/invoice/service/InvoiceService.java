@@ -1,9 +1,6 @@
 package pl.miwu.invoice.service;
 
-import pl.miwu.invoice.model.Invoice;
-import pl.miwu.invoice.model.Item;
-
-import java.util.Collection;
+import pl.miwu.invoice.model.invoice.Invoice;
 
 /**
  * Created with IntelliJ IDEA.

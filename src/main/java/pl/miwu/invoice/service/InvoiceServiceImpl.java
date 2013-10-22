@@ -2,13 +2,8 @@ package pl.miwu.invoice.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.miwu.invoice.model.Invoice;
-import pl.miwu.invoice.model.Item;
+import pl.miwu.invoice.model.invoice.Invoice;
 import pl.miwu.invoice.repository.InvoiceRepository;
-
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
