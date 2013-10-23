@@ -16,7 +16,6 @@
 
     <dependencies>
 
-
         <dependency>
             <groupId>org.lazyluke</groupId>
             <artifactId>log4jdbc-remix</artifactId>
@@ -170,6 +169,14 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+
+        <!-- template engine to generate output based on template. Used for email and invoice templates. -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.14</version>
+        </dependency>
+
 
         <!-- Converting invoices -->
         <dependency>

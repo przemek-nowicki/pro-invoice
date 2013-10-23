@@ -1,0 +1,59 @@
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.center {
+    margin: 0 auto;
+}
+
+#invoiceContent {
+    width:500px;
+    text-align: center;
+}
+
+#invoiceContent h1 {
+}
+
+#invoiceContent div.parties {
+    text-align: left;
+}
+
+#invoiceContent div.parties div.right {
+    margin-right: 30px;
+}
+
+#invoiceContent div.purchasedItems {
+    display:inline-table;
+    margin-top:20px;
+    text-align: left;
+}
+
+#invoiceContent div.purchasedItems table {
+    border-spacing:0;
+    border-collapse:collapse;
+}
+#invoiceContent div.purchasedItems table,th, td {
+    border: 1px solid #000000;
+}
+
+#invoiceContent div.purchasedItems table td.summary  {
+    text-align:right;
+}
+
+#invoiceContent div.purchasedItems div.note {
+    margin-top:20px;
+}
+
+#invoiceContent div.purchasedItems div.payment {
+    margin-top:50px;
+}

@@ -1,14 +1,18 @@
 package pl.miwu.invoice.web.admin.invoices;
 
+import freemarker.template.Configuration;
+import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 import pl.miwu.invoice.model.Client;
 import pl.miwu.invoice.model.invoice.Invoice;
 import pl.miwu.invoice.service.ClientService;
@@ -17,10 +21,9 @@ import pl.miwu.invoice.util.invoice.CurrencyCode;
 import pl.miwu.invoice.util.invoice.CurrencySymbol;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -39,6 +42,8 @@ public class InvoiceController {
     private InvoiceService invoiceService;
     @Autowired
     private ClientService clientService;
+    @Autowired
+    private Configuration freemarkerTemplateEngine;
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String initCreationForm(Model model) {
@@ -75,6 +80,27 @@ public class InvoiceController {
             return "redirect:/admin/invoice/edit/{invoiceId}";
         }
     }
+
+    @RequestMapping(value = "/preview/{invoiceId}",method = RequestMethod.GET)
+    public String preview(@PathVariable("invoiceId") int invoiceId, Model model) {
+        Invoice invoice = invoiceService.getInvoiceById(invoiceId);
+        model.addAttribute(invoice);
+        return "admin/invoices/preview";
+    }
+
+    @RequestMapping(value = "/download/{invoiceId}",method = RequestMethod.GET)
+    public ModelAndView download(@PathVariable("invoiceId") int invoiceId, ModelAndView modelAndView, Locale locale) throws IOException, TemplateException {
+        Invoice invoice = invoiceService.getInvoiceById(invoiceId);
+        modelAndView.addObject(invoice);
+        modelAndView.setViewName("admin/invoices/preview");
+        Map templateVars = new HashMap();
+        freemarkerTemplateEngine.setDefaultEncoding("UTF-8");
+        templateVars.put("invoice",invoice);
+        String str = FreeMarkerTemplateUtils.processTemplateIntoString(freemarkerTemplateEngine.getTemplate("001.ftl"), templateVars);
+        modelAndView.addObject("invoiceView",str);
+        return modelAndView;
+    }
+
     @ModelAttribute("clients")
     public Collection<Client> clients(){
         return clientService.getClients();
