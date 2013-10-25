@@ -36,19 +36,8 @@ public class MakeInvoiceTests {
 
     @Test
     public void testInvoiceCreation() throws IOException, DocumentException, TemplateException {
-        Document document = new Document();
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("pdf.pdf"));
-        document.open();
-        Map templateVars = new HashMap();
         Invoice invoice = invoiceService.getInvoiceById(48);
-        freemarkerTemplateEngine.setDefaultEncoding("UTF-8");
-        templateVars.put("invoice",invoice);
-        String html = FreeMarkerTemplateUtils.processTemplateIntoString(freemarkerTemplateEngine.getTemplate("001.ftl"), templateVars);
-        InputStream stream = new ByteArrayInputStream(html.getBytes("UTF-8"));
-        XMLWorkerHelper.getInstance().parseXHtml(writer, document, stream);
-        //step 5
-        document.close();
-
+        String pdf=invoiceService.generatePdf(invoice);
         System.out.println( "PDF Created!" );
     }
 

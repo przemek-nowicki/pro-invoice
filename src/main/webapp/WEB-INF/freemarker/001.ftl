@@ -1,7 +1,7 @@
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link href="/invoice/resources/admin/css/001.css" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="${cssURL}" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="invoiceContent">
@@ -23,7 +23,7 @@
          </div>
     </div>
     <div class="purchasedItems">
-        <table>
+        <table cellpading="0" cellspacing="0">
             <tr>
                 <th>No.</th>
                 <th>Nazwa i rodzaj usługi</th>
